@@ -21,7 +21,7 @@ export default function Footer() {
             </aside>
             <nav>
                 <h6 className="footer-title">Links</h6>
-                <a className="link link-hover">Github</a>
+                <a className="link link-hover" href="https://github.com/memento-j/price-comparator" target="_blank">Github</a>
                 <a className="link link-hover">Contact</a>
             </nav>
             <nav>

@@ -11,28 +11,40 @@ export default function NavBar() {
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-3xl">
-                        <li><a>Home</a></li>
+                        <li>
+                            <Link to="/"><button>Home</button></Link>
+                        </li>
                         <li>
                         <a>Account</a>
                         <ul className="p-2">
-                            <li><a>Favorites</a></li>
-                            <li><a>Settings</a></li>
+                            <li>
+                                <Link to="/account/favorites"><button>Favorites</button></Link>
+                            </li>
+                            <li>
+                                <Link to="/account/settings"><button>Settings</button></Link>
+                            </li>
                         </ul>
                         </li>
                         <li><a>uhhh idk</a></li>
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">Product Price Searcher</a>
+                <Link to="/">
+                    <button className="btn btn-ghost text-xl">Product Price Searcher</button>
+                </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                <li><a>Home</a></li>
+                <li><Link to="/"><button>Home</button></Link></li>
                 <li>
                     <details>
                     <summary>Account</summary>
                     <ul className="p-2 bg-primary">
-                        <li><a>Favorites</a></li>
-                        <li><a>Settings</a></li>
+                        <li>
+                            <Link to="/account/favorites"><button>Favorites</button></Link>
+                        </li>
+                        <li>
+                            <Link to="/account/settings"><button>Settings</button></Link>
+                        </li>
                     </ul>
                     </details>
                 </li>
