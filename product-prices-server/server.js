@@ -12,12 +12,23 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get("/prices", async (req,res) => {
-    const productsJson = await getProductPrices("iPad mini")
+    //get product name from search query
+    const product = req.query["search"];
+    //when no search query is given
+    if (product === undefined) {
+        return res.send("No search query given")
+    }    
+    //query is given, so fetch the product prices
+    const productsJson = await getProductPrices(req.query["search"])
     res.json(productsJson);
-    //res.send("hi")
-    //console.log(req.query["search"]);
 });
 
+
+/////// potential errors to fix later !!!
+// 1.) if a product is able to be financed, the structure of the page is different to show
+//  a finaced option, so the queryselector usually used is incorrect. 
+//  skips to the next product price offer if it is a financed option
+// 2.) something another country's website is pulled up and the currency type doesn't match
 
 //get product prices from product title using puppeteer
 //returns json object of prices
@@ -39,7 +50,6 @@ async function getProductPrices (productTitle) {
     
     //go through each offer (list element)
     for (let i = 0; i < currentOffers.length; i++) {
-
         //get retailer name
         const retailerName = await page.evaluate(el => el.querySelector(".br-seller").textContent.toLowerCase(), currentOffers[i]);
 
