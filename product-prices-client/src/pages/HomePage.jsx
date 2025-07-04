@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from "axios"
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -11,26 +11,12 @@ function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   //function to fetch data
-  async function fetchAPI() {
+  async function fetchAPI(userQuery) {
     setIsLoading(true);
-    const response = await axios.get("http://localhost:8080/prices?search=ipad+mini");
+    const response = await axios.get(`http://localhost:8080/prices?search=${userQuery}`);
     setProducts(response.data);
     setIsLoading(false);
   }
-
-  function handleSearchClick() {
-
-  }
-
-  function handleQueryChange(event) {
-    setSearchQuery(event.target.value);
-  }
-
-
-  //call function on initial render (testing purposes)
-  //useEffect(() => {
-  //  fetchAPI();
-  //}, []);
 
   //loading page when fetching from backend
   if (isLoading) {
@@ -47,8 +33,15 @@ function HomePage() {
       <p className="text-5xl font-bold m-20 mt-75 text-center">Product Price Searcher</p>
       {/* Search Bar */}
       <div className="text-center">
-        <input className="input input-primary rounded-l-full sm:input-sm md:input-md lg:input-lg xl:input-xl" type="search" required placeholder="Enter full product name..." onChange={handleQueryChange} />
-        <button className="btn btn-primary rounded-r-full btn-soft sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl" onClick={handleSearchClick}>
+        <input className="input input-primary rounded-l-full sm:input-sm md:input-md lg:input-lg xl:input-xl" type="search" required placeholder="Enter full product name..." 
+        onChange={(event) => setSearchQuery(event.target.value)}  
+        //if key presseed in the input field is enter, fetch prices
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            fetchAPI(searchQuery);
+          }
+        }}/>
+        <button className="btn btn-primary rounded-r-full btn-soft sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl" onClick={() => fetchAPI(searchQuery)}>
           <svg className="h-[1em] opacity-80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g
               strokeLinejoin="round"
