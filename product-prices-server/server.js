@@ -53,6 +53,10 @@ async function getProductPrices (productTitle) {
         //get retailer name
         const retailerName = await page.evaluate(el => el.querySelector(".br-seller").textContent.toLowerCase(), currentOffers[i]);
 
+        if (retailerName.includes("ebay")) {
+            continue;
+        }
+
         //retailer has not been addeed, so create an object for it
         if (allRetailers[retailerName] == undefined) {
             allRetailers[retailerName] = {}

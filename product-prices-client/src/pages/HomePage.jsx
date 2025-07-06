@@ -3,7 +3,7 @@ import axios from "axios"
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import LoadingPage from './LoadingPage';
-
+import Card from '../components/Card';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -13,8 +13,13 @@ function HomePage() {
   //function to fetch data
   async function fetchAPI(userQuery) {
     setIsLoading(true);
-    const response = await axios.get(`http://localhost:8080/prices?search=${userQuery}`);
-    setProducts(response.data);
+    try {
+      const response = await axios.get(`http://localhost:8080/prices?search=${userQuery}`);
+      setProducts(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
     setIsLoading(false);
   }
 
@@ -30,18 +35,27 @@ function HomePage() {
       {/* NavBar */}
       <NavBar />
       {/* Title */}
-      <p className="text-5xl font-bold m-20 mt-75 text-center">Product Price Searcher</p>
+      <p className="text-5xl font-bold m-20 mt-50 text-center">Product Price Searcher</p>
       {/* Search Bar */}
       <div className="text-center">
         <input className="input input-primary rounded-l-full sm:input-sm md:input-md lg:input-lg xl:input-xl" type="search" required placeholder="Enter full product name..." 
         onChange={(event) => setSearchQuery(event.target.value)}  
         //if key presseed in the input field is enter, fetch prices
         onKeyDown={(event) => {
+          //ensures there is a valid search query
+          if (searchQuery === "") {
+            return;
+          }
           if (event.key === "Enter") {
             fetchAPI(searchQuery);
           }
         }}/>
-        <button className="btn btn-primary rounded-r-full btn-soft sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl" onClick={() => fetchAPI(searchQuery)}>
+        <button className="btn btn-primary rounded-r-full btn-outline sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl" onClick={() => {
+          //ensures there is a valid search query
+          if (searchQuery === "") {
+            return;
+          }
+          fetchAPI(searchQuery)}}>
           <svg className="h-[1em] opacity-80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g
               strokeLinejoin="round"
@@ -57,15 +71,14 @@ function HomePage() {
         </button>
       </div>
       {/* List displaying products */}
-      <div>
-        <ul>
+      <div className="flex justify-center-safe">
+        <ul className="mb-75 mt-15 grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
           {products.map((product, index) =>
-            <li key={index}>
-              {product.retailer}
-              <br />
-              {product.price}
-              <br />
-              {product.link}
+            <li key={index} className="m-5">
+              <Card 
+              price={product.price}
+              retailer={product.retailer}
+              link={product.link}/>
             </li>
           )}
         </ul>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
     return(
-        <div className="navbar bg-base-100 shadow-sm fixed top-0">
+        <div className="navbar bg-base-300 shadow-sm fixed top-0 z-10">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -12,43 +12,41 @@ export default function NavBar() {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-3xl">
                         <li>
-                            <Link to="/"><button>Home</button></Link>
+                            <Link to="/"><button className="text-[16px]">Home</button></Link>
                         </li>
                         <li>
-                        <a>Account</a>
+                        <a className="text-[16px]">Account</a>
                         <ul className="p-2">
                             <li>
-                                <Link to="/account/favorites"><button>Favorites</button></Link>
+                                <Link to="/account/favorites"><button className="text-[16px]">Favorites</button></Link>
                             </li>
                             <li>
-                                <Link to="/account/settings"><button>Settings</button></Link>
+                                <Link to="/account/settings"><button className="text-[16px]">Settings</button></Link>
                             </li>
                         </ul>
                         </li>
-                        <li><a>uhhh idk</a></li>
                     </ul>
                 </div>
                 <Link to="/">
-                    <button className="btn btn-ghost text-xl">Product Price Searcher</button>
+                    <button className="btn btn-ghost text-2xl">Product Price Searcher</button>
                 </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                <li><Link to="/"><button>Home</button></Link></li>
+                <li><Link to="/"><button className="text-[18px]">Home</button></Link></li>
                 <li>
                     <details>
-                    <summary>Account</summary>
+                    <summary className="text-[18px]">Account</summary>
                     <ul className="p-2 bg-primary">
                         <li>
-                            <Link to="/account/favorites"><button>Favorites</button></Link>
+                            <Link to="/account/favorites"><button className="text-[18px]">Favorites</button></Link>
                         </li>
                         <li>
-                            <Link to="/account/settings"><button>Settings</button></Link>
+                            <Link to="/account/settings"><button className="text-[18px]">Settings</button></Link>
                         </li>
                     </ul>
                     </details>
                 </li>
-                <li><a>uhh idk</a></li>
                 </ul>
             </div>
             <div className="navbar-end">
